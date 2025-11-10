@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
   Avatar,
   Button,
@@ -20,6 +21,7 @@ import { useAuth } from '../contexts/AuthContext'
 import Logo from '../components/Logo'
 
 export default function SignUp() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { register } = useAuth()
   const [name, setName] = useState('')
@@ -37,7 +39,7 @@ export default function SignUp() {
       await register(name, email, password)
       navigate('/dashboard')
     } catch (err: any) {
-      setError(err.response?.data?.detail || '회원가입에 실패했습니다.')
+      setError(err.response?.data?.detail || t('auth.registerError'))
     } finally {
       setLoading(false)
     }
@@ -107,33 +109,31 @@ export default function SignUp() {
               }}
             >
               <Typography level="h1" sx={{ fontWeight: 700, mb: 3 }}>
-                Join Us Today
+                {t('auth.joinUs')}
               </Typography>
               <Typography level="title-lg" sx={{ mb: 2, textAlign: 'center' }}>
-                Adaptable performance
+                {t('auth.adaptablePerformance')}
               </Typography>
               <Typography level="body-md" sx={{ mb: 3, textAlign: 'center', maxWidth: 400 }}>
-                Our product effortlessly adjusts to your needs, boosting efficiency and simplifying
-                your tasks.
+                {t('auth.adaptablePerformanceDesc')}
               </Typography>
               <Typography level="title-lg" sx={{ mb: 2, textAlign: 'center' }}>
-                Built to last
+                {t('auth.builtToLast')}
               </Typography>
               <Typography level="body-md" sx={{ mb: 3, textAlign: 'center', maxWidth: 400 }}>
-                Experience unmatched durability that goes above and beyond with lasting investment.
+                {t('auth.builtToLastDesc')}
               </Typography>
               <Typography level="title-lg" sx={{ mb: 2, textAlign: 'center' }}>
-                Great user experience
+                {t('auth.greatUserExperience')}
               </Typography>
               <Typography level="body-md" sx={{ mb: 3, textAlign: 'center', maxWidth: 400 }}>
-                Integrate our product into your routine with an intuitive and easy-to-use interface.
+                {t('auth.greatUserExperienceDesc')}
               </Typography>
               <Typography level="title-lg" sx={{ mb: 2, textAlign: 'center' }}>
-                Innovative functionality
+                {t('auth.innovativeFunctionality')}
               </Typography>
               <Typography level="body-md" sx={{ textAlign: 'center', maxWidth: 400 }}>
-                Stay ahead with features that set new standards, addressing your evolving needs
-                better than the rest.
+                {t('auth.innovativeFunctionalityDesc')}
               </Typography>
             </Box>
           </Grid>
@@ -159,45 +159,45 @@ export default function SignUp() {
               <Avatar sx={{ m: 1, bgcolor: 'primary.500' }}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography level="h3">Sign up</Typography>
+              <Typography level="h3">{t('auth.signUp')}</Typography>
               <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
                 <Grid container spacing={2}>
                   <Grid xs={12}>
                     <FormControl required>
-                      <FormLabel>Full name</FormLabel>
+                      <FormLabel>{t('auth.fullName')}</FormLabel>
                       <Input
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="이름을 입력하세요"
+                        placeholder={t('auth.fullName')}
                         autoFocus
                       />
                     </FormControl>
                   </Grid>
                   <Grid xs={12}>
                     <FormControl required>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>{t('auth.email')}</FormLabel>
                       <Input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="이메일을 입력하세요"
+                        placeholder={t('auth.email')}
                       />
                     </FormControl>
                   </Grid>
                   <Grid xs={12}>
                     <FormControl required>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>{t('auth.password')}</FormLabel>
                       <Input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="비밀번호를 입력하세요"
+                        placeholder={t('auth.password')}
                       />
                     </FormControl>
                   </Grid>
                   <Grid xs={12}>
                     <FormControl>
-                      <Checkbox label="I want to receive updates via email." />
+                      <Checkbox label={t('auth.emailUpdates')} />
                     </FormControl>
                   </Grid>
                 </Grid>
@@ -213,12 +213,12 @@ export default function SignUp() {
                   sx={{ mt: 3, mb: 2 }}
                   loading={loading}
                 >
-                  Sign up
+                  {t('auth.signUp')}
                 </Button>
                 <Grid container justifyContent="flex-end">
                   <Grid>
                     <JoyLink component={Link} to="/signin" level="body-sm">
-                      Already have an account? Sign in
+                      {t('auth.hasAccount')}
                     </JoyLink>
                   </Grid>
                 </Grid>
@@ -236,7 +236,7 @@ export default function SignUp() {
                     />
                   }
                 >
-                  Sign up with Google
+                  {t('auth.signUpWithGoogle')}
                 </Button>
                 <Button
                   fullWidth
@@ -250,7 +250,7 @@ export default function SignUp() {
                     />
                   }
                 >
-                  Sign up with Facebook
+                  {t('auth.signUpWithFacebook')}
                 </Button>
               </Box>
             </Box>

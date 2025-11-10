@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Box,
   Grid,
@@ -35,6 +36,7 @@ const countryData = [
 ]
 
 export default function Dashboard() {
+  const { t } = useTranslation()
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set(['Website']))
 
   const toggleFolder = (folder: string) => {
@@ -105,9 +107,9 @@ export default function Dashboard() {
       {/* Breadcrumbs */}
       <Breadcrumbs sx={{ mb: 2 }}>
         <JoyLink href="#" color="neutral">
-          Dashboard
+          {t('dashboard.breadcrumb')}
         </JoyLink>
-        <Typography>Home</Typography>
+        <Typography>{t('common.home')}</Typography>
       </Breadcrumbs>
 
       {/* Alert Banner */}
@@ -115,38 +117,38 @@ export default function Dashboard() {
         color="warning"
         endDecorator={
           <Button size="sm" variant="soft" color="warning">
-            Get the discount
+            {t('dashboard.getDiscount')}
           </Button>
         }
         sx={{ mb: 3 }}
       >
-        Plan about to expire
+        {t('dashboard.alertTitle')}
         <br />
-        Enjoy 10% off when renewing your plan today.
+        {t('dashboard.alertMessage')}
       </Alert>
 
       {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Box>
           <Typography level="h1" gutterBottom>
-            Dashboard
+            {t('dashboard.title')}
           </Typography>
           <Typography level="body-sm" textColor="neutral.500">
-            Apr 17, 2023
+            {t('dashboard.date')}
           </Typography>
         </Box>
       </Box>
 
       {/* Overview Section */}
       <Typography level="title-lg" sx={{ mb: 2 }}>
-        Overview
+        {t('dashboard.overview')}
       </Typography>
       <Grid container spacing={3} sx={{ mb: 4 }}>
         {/* Users */}
         <Grid xs={12} sm={6} md={4}>
           <Card>
             <Typography level="body-sm" textColor="neutral.500" gutterBottom>
-              Users
+              {t('dashboard.users')}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Typography level="h2">14k</Typography>
@@ -160,7 +162,7 @@ export default function Dashboard() {
               </Chip>
             </Box>
             <Typography level="body-xs" textColor="neutral.500" sx={{ mt: 1 }}>
-              Last 30 days
+              {t('dashboard.last30Days')}
             </Typography>
           </Card>
         </Grid>
@@ -169,7 +171,7 @@ export default function Dashboard() {
         <Grid xs={12} sm={6} md={4}>
           <Card>
             <Typography level="body-sm" textColor="neutral.500" gutterBottom>
-              Conversions
+              {t('dashboard.conversions')}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Typography level="h2">325</Typography>
@@ -183,7 +185,7 @@ export default function Dashboard() {
               </Chip>
             </Box>
             <Typography level="body-xs" textColor="neutral.500" sx={{ mt: 1 }}>
-              Last 30 days
+              {t('dashboard.last30Days')}
             </Typography>
           </Card>
         </Grid>
@@ -192,7 +194,7 @@ export default function Dashboard() {
         <Grid xs={12} sm={6} md={4}>
           <Card>
             <Typography level="body-sm" textColor="neutral.500" gutterBottom>
-              Event count
+              {t('dashboard.eventCount')}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Typography level="h2">200k</Typography>
@@ -206,7 +208,7 @@ export default function Dashboard() {
               </Chip>
             </Box>
             <Typography level="body-xs" textColor="neutral.500" sx={{ mt: 1 }}>
-              Last 30 days
+              {t('dashboard.last30Days')}
             </Typography>
           </Card>
         </Grid>
@@ -217,14 +219,14 @@ export default function Dashboard() {
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
             <Typography level="title-lg" gutterBottom>
-              Explore your data
+              {t('dashboard.exploreData')}
             </Typography>
             <Typography level="body-sm" textColor="neutral.500">
-              Uncover performance and visitor insights with our data wizardry.
+              {t('dashboard.exploreDataDesc')}
             </Typography>
           </Box>
           <Button variant="solid" startDecorator={<AutoAwesomeIcon />}>
-            Get insights
+            {t('dashboard.getInsights')}
           </Button>
         </Box>
       </Card>
@@ -234,7 +236,7 @@ export default function Dashboard() {
         <Grid xs={12} md={6}>
           <Card>
             <Typography level="title-lg" gutterBottom>
-              Sessions
+              {t('dashboard.sessions')}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', mb: 1 }}>
               <Typography level="h2">13,277</Typography>
@@ -248,7 +250,7 @@ export default function Dashboard() {
               </Chip>
             </Box>
             <Typography level="body-sm" textColor="neutral.500">
-              Sessions per day for the last 30 days
+              {t('dashboard.sessionsDesc')}
             </Typography>
           </Card>
         </Grid>
@@ -257,7 +259,7 @@ export default function Dashboard() {
         <Grid xs={12} md={6}>
           <Card>
             <Typography level="title-lg" gutterBottom>
-              Page views and downloads
+              {t('dashboard.pageViews')}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', mb: 1 }}>
               <Typography level="h2">1.3M</Typography>
@@ -271,7 +273,7 @@ export default function Dashboard() {
               </Chip>
             </Box>
             <Typography level="body-sm" textColor="neutral.500">
-              Page views and downloads for the last 6 months
+              {t('dashboard.pageViewsDesc')}
             </Typography>
           </Card>
         </Grid>
@@ -280,10 +282,10 @@ export default function Dashboard() {
         <Grid xs={12} md={6}>
           <Card>
             <Typography level="title-lg" gutterBottom>
-              Details
+              {t('dashboard.details')}
             </Typography>
             <Typography level="title-lg" gutterBottom sx={{ mt: 2 }}>
-              Product tree
+              {t('dashboard.productTree')}
             </Typography>
             <List>
               {productTree.map((item) => renderTreeItem(item))}
@@ -295,12 +297,12 @@ export default function Dashboard() {
         <Grid xs={12} md={6}>
           <Card>
             <Typography level="title-lg" gutterBottom>
-              Users by country
+              {t('dashboard.usersByCountry')}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
               <Typography level="h3">98.5K</Typography>
               <Typography level="body-sm" textColor="neutral.500">
-                Total
+                {t('dashboard.total')}
               </Typography>
             </Box>
             <ResponsiveContainer width="100%" height={300}>

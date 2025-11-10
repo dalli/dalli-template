@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Box,
   Sheet,
@@ -38,6 +39,7 @@ interface UserFormData {
 }
 
 export default function Users() {
+  const { t, i18n } = useTranslation()
   const { token } = useAuth()
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(false)
@@ -68,11 +70,11 @@ export default function Users() {
         const data = await response.json()
         setUsers(data)
       } else {
-        showSnackbar('사용자 목록을 불러오는데 실패했습니다', 'danger')
+        showSnackbar(t('users.fetchError'), 'danger')
       }
     } catch (error) {
       console.error('Error fetching users:', error)
-      showSnackbar('사용자 목록을 불러오는데 실패했습니다', 'danger')
+      showSnackbar(t('users.fetchError'), 'danger')
     } finally {
       setLoading(false)
     }
@@ -138,23 +140,23 @@ export default function Users() {
 
       if (response.ok) {
         showSnackbar(
-          editingUser ? '사용자가 수정되었습니다' : '사용자가 생성되었습니다',
+          editingUser ? t('users.updateSuccess') : t('users.createSuccess'),
           'success'
         )
         handleCloseDialog()
         fetchUsers()
       } else {
         const error = await response.json()
-        showSnackbar(error.detail || '작업에 실패했습니다', 'danger')
+        showSnackbar(error.detail || t('users.saveError'), 'danger')
       }
     } catch (error) {
       console.error('Error saving user:', error)
-      showSnackbar('작업에 실패했습니다', 'danger')
+      showSnackbar(t('users.saveError'), 'danger')
     }
   }
 
   const handleDelete = async (id: number) => {
-    if (!confirm('정말 이 사용자를 삭제하시겠습니까?')) {
+    if (!confirm(t('users.confirmDelete'))) {
       return
     }
 
@@ -167,14 +169,14 @@ export default function Users() {
       })
 
       if (response.ok) {
-        showSnackbar('사용자가 삭제되었습니다', 'success')
+        showSnackbar(t('users.deleteSuccess'), 'success')
         fetchUsers()
       } else {
-        showSnackbar('사용자 삭제에 실패했습니다', 'danger')
+        showSnackbar(t('users.deleteError'), 'danger')
       }
     } catch (error) {
       console.error('Error deleting user:', error)
-      showSnackbar('사용자 삭제에 실패했습니다', 'danger')
+      showSnackbar(t('users.deleteError'), 'danger')
     }
   }
 
@@ -184,18 +186,22 @@ export default function Users() {
   const endIndex = startIndex + itemsPerPage
   const paginatedUsers = users.slice(startIndex, endIndex)
 
+  const getLocale = () => {
+    return i18n.language === 'ko' ? 'ko-KR' : 'en-US'
+  }
+
   return (
     <Box>
       <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography level="h1">
-          사용자 관리
+          {t('users.title')}
         </Typography>
         <Button
           variant="solid"
           startDecorator={<AddIcon />}
           onClick={() => handleOpenDialog()}
         >
-          사용자 추가
+          {t('users.addUser')}
         </Button>
       </Box>
 
@@ -203,26 +209,26 @@ export default function Users() {
         <Table>
           <thead>
             <tr>
-              <th style={{ width: 70, textAlign: 'center' }}>ID</th>
-              <th style={{ minWidth: 150 }}>이름</th>
-              <th style={{ minWidth: 200 }}>이메일</th>
-              <th style={{ width: 120, textAlign: 'center' }}>역할</th>
-              <th style={{ width: 100, textAlign: 'center' }}>상태</th>
-              <th style={{ width: 180 }}>생성일</th>
-              <th style={{ width: 100, textAlign: 'center' }}>작업</th>
+              <th style={{ width: 70, textAlign: 'center' }}>{t('users.id')}</th>
+              <th style={{ minWidth: 150 }}>{t('users.nameLabel')}</th>
+              <th style={{ minWidth: 200 }}>{t('users.emailLabel')}</th>
+              <th style={{ width: 120, textAlign: 'center' }}>{t('users.role')}</th>
+              <th style={{ width: 100, textAlign: 'center' }}>{t('users.status')}</th>
+              <th style={{ width: 180 }}>{t('users.createdAt')}</th>
+              <th style={{ width: 100, textAlign: 'center' }}>{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
                 <td colSpan={7} style={{ textAlign: 'center', padding: '2rem' }}>
-                  <Typography>로딩 중...</Typography>
+                  <Typography>{t('common.loading')}</Typography>
                 </td>
               </tr>
             ) : paginatedUsers.length === 0 ? (
               <tr>
                 <td colSpan={7} style={{ textAlign: 'center', padding: '2rem' }}>
-                  <Typography>사용자가 없습니다</Typography>
+                  <Typography>{t('common.noData')}</Typography>
                 </td>
               </tr>
             ) : (
@@ -246,10 +252,10 @@ export default function Users() {
                       variant="soft"
                       color={user.is_active ? 'success' : 'neutral'}
                     >
-                      {user.is_active ? '활성' : '비활성'}
+                      {user.is_active ? t('common.active') : t('common.inactive')}
                     </Chip>
                   </td>
-                  <td>{new Date(user.created_at).toLocaleString('ko-KR')}</td>
+                  <td>{new Date(user.created_at).toLocaleString(getLocale())}</td>
                   <td style={{ textAlign: 'center' }}>
                     <IconButton
                       size="sm"
@@ -282,7 +288,7 @@ export default function Users() {
               disabled={currentPage === 1}
               onClick={() => setCurrentPage(currentPage - 1)}
             >
-              이전
+              {t('common.previous')}
             </Button>
             <Typography level="body-sm" sx={{ display: 'flex', alignItems: 'center', px: 2 }}>
               {currentPage} / {totalPages}
@@ -293,7 +299,7 @@ export default function Users() {
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage(currentPage + 1)}
             >
-              다음
+              {t('common.next')}
             </Button>
           </Box>
         )}
@@ -302,45 +308,45 @@ export default function Users() {
       <Modal open={openDialog} onClose={handleCloseDialog}>
         <ModalDialog>
           <ModalClose />
-          <DialogTitle>{editingUser ? '사용자 수정' : '사용자 추가'}</DialogTitle>
+          <DialogTitle>{editingUser ? t('users.editUser') : t('users.addUser')}</DialogTitle>
           <Stack spacing={2} sx={{ mt: 2 }}>
             <FormControl required>
-              <FormLabel>이름</FormLabel>
+              <FormLabel>{t('users.nameLabel')}</FormLabel>
               <Input
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="이름을 입력하세요"
+                placeholder={t('users.namePlaceholder')}
               />
             </FormControl>
             <FormControl required>
-              <FormLabel>이메일</FormLabel>
+              <FormLabel>{t('users.emailLabel')}</FormLabel>
               <Input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder="이메일을 입력하세요"
+                placeholder={t('users.emailPlaceholder')}
               />
             </FormControl>
             <FormControl required={!editingUser}>
               <FormLabel>
-                {editingUser ? '비밀번호 (변경하려면 입력)' : '비밀번호'}
+                {editingUser ? t('users.passwordChangeLabel') : t('users.passwordLabel')}
               </FormLabel>
               <Input
                 type="password"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                placeholder="비밀번호를 입력하세요"
+                placeholder={t('users.passwordPlaceholder')}
               />
               {editingUser && (
                 <Typography level="body-xs" textColor="neutral.500" sx={{ mt: 0.5 }}>
-                  비밀번호를 변경하지 않으려면 비워두세요
+                  {t('users.passwordChangeHint')}
                 </Typography>
               )}
             </FormControl>
           </Stack>
           <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
             <Button variant="outlined" onClick={handleCloseDialog} sx={{ flex: 1 }}>
-              취소
+              {t('common.cancel')}
             </Button>
             <Button
               variant="solid"
@@ -348,7 +354,7 @@ export default function Users() {
               disabled={!formData.name || !formData.email || (!editingUser && !formData.password)}
               sx={{ flex: 1 }}
             >
-              {editingUser ? '수정' : '추가'}
+              {editingUser ? t('common.save') : t('common.add')}
             </Button>
           </Stack>
         </ModalDialog>

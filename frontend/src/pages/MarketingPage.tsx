@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
   Button,
   Input,
@@ -26,6 +27,7 @@ import {
 import Logo from '../components/Logo'
 
 export default function MarketingPage() {
+  const { t } = useTranslation()
   const [email, setEmail] = useState('')
 
   return (
@@ -42,19 +44,19 @@ export default function MarketingPage() {
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 2 }}>
           <Logo variant="h6" />
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-            <Button variant="plain" color="neutral">Features</Button>
-            <Button variant="plain" color="neutral">Testimonials</Button>
-            <Button variant="plain" color="neutral">Highlights</Button>
-            <Button variant="plain" color="neutral">Pricing</Button>
-            <Button variant="plain" color="neutral">FAQ</Button>
+            <Button variant="plain" color="neutral">{t('marketing.footer.features')}</Button>
+            <Button variant="plain" color="neutral">{t('marketing.testimonials')}</Button>
+            <Button variant="plain" color="neutral">{t('marketing.highlights')}</Button>
+            <Button variant="plain" color="neutral">{t('marketing.pricing')}</Button>
+            <Button variant="plain" color="neutral">{t('marketing.faq')}</Button>
             <Button variant="plain" color="neutral">Blog</Button>
           </Box>
           <Box sx={{ display: 'flex', gap: 1 }}>
             <Button variant="plain" color="neutral" component={Link} to="/signin">
-              Sign in
+              {t('auth.signIn')}
             </Button>
             <Button variant="solid" color="primary" component={Link} to="/signup">
-              Sign up
+              {t('auth.signUp')}
             </Button>
           </Box>
         </Box>
@@ -63,31 +65,30 @@ export default function MarketingPage() {
       {/* Hero Section */}
       <Box sx={{ maxWidth: 'md', mx: 'auto', py: 12, textAlign: 'center', px: 2 }}>
         <Typography level="h1" sx={{ fontWeight: 700, mb: 3 }}>
-          Our latest products
+          {t('marketing.title')}
         </Typography>
         <Typography level="title-lg" textColor="neutral.500" sx={{ mb: 4, maxWidth: 600, mx: 'auto' }}>
-          Explore our cutting-edge dashboard, delivering high-quality solutions tailored to your
-          needs. Elevate your experience with top-tier features and services.
+          {t('marketing.subtitle')}
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap', mb: 6 }}>
           <Input
-            placeholder="Email"
+            placeholder={t('auth.email')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             sx={{ minWidth: 300 }}
           />
           <Button variant="solid" size="lg" color="primary">
-            Start now
+            {t('marketing.startNow')}
           </Button>
         </Box>
         <Typography level="body-sm" textColor="neutral.500">
-          By clicking "Start now" you agree to our Terms & Conditions.
+          {t('marketing.terms')}
         </Typography>
 
         {/* Trusted by */}
         <Box sx={{ mt: 8 }}>
           <Typography level="body-sm" textColor="neutral.500" sx={{ mb: 3 }}>
-            Trusted by the best companies
+            {t('marketing.trustedBy')}
           </Typography>
           <Grid container spacing={4} justifyContent="center">
             {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -105,30 +106,26 @@ export default function MarketingPage() {
       <Box sx={{ bgcolor: 'background.surface', py: 10 }}>
         <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 2 }}>
           <Typography level="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
-            Product features
+            {t('marketing.features')}
           </Typography>
           <Typography level="body-md" textColor="neutral.500" textAlign="center" sx={{ mb: 6 }}>
-            Provide a brief overview of the key features of the product. For example, you could
-            list the number of features, their types or benefits, and add-ons.
+            {t('marketing.featuresDesc')}
           </Typography>
           <Grid container spacing={4}>
             {[
               {
-                title: 'Dashboard',
-                description:
-                  'This item could provide a snapshot of the most important metrics or data points related to the product.',
+                titleKey: 'marketing.dashboard',
+                descKey: 'marketing.dashboardDesc',
                 icon: <DashboardIcon sx={{ fontSize: 40 }} />,
               },
               {
-                title: 'Mobile integration',
-                description:
-                  'This item could provide information about the mobile app version of the product.',
+                titleKey: 'marketing.mobileIntegration',
+                descKey: 'marketing.mobileIntegrationDesc',
                 icon: <PhoneAndroidIcon sx={{ fontSize: 40 }} />,
               },
               {
-                title: 'Available on all platforms',
-                description:
-                  'This item could let users know the product is available on all platforms, such as web, mobile, and desktop.',
+                titleKey: 'marketing.allPlatforms',
+                descKey: 'marketing.allPlatformsDesc',
                 icon: <DevicesIcon sx={{ fontSize: 40 }} />,
               },
             ].map((feature, index) => (
@@ -136,10 +133,10 @@ export default function MarketingPage() {
                 <Card variant="outlined" sx={{ height: '100%', textAlign: 'center', p: 3 }}>
                   <Box sx={{ color: 'primary.500', mb: 2 }}>{feature.icon}</Box>
                   <Typography level="title-lg" gutterBottom>
-                    {feature.title}
+                    {t(feature.titleKey)}
                   </Typography>
                   <Typography level="body-sm" textColor="neutral.500">
-                    {feature.description}
+                    {t(feature.descKey)}
                   </Typography>
                 </Card>
               </Grid>
@@ -152,11 +149,10 @@ export default function MarketingPage() {
       <Box sx={{ bgcolor: 'background.level1', py: 10 }}>
         <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 2 }}>
           <Typography level="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
-            Testimonials
+            {t('marketing.testimonials')}
           </Typography>
           <Typography level="body-md" textColor="neutral.500" textAlign="center" sx={{ mb: 6 }}>
-            See what our customers love about our products. Discover how we excel in efficiency,
-            durability, and satisfaction. Join us for quality, innovation, and reliable support.
+            {t('marketing.testimonialsDesc')}
           </Typography>
           <Grid container spacing={4}>
             {[
@@ -225,52 +221,45 @@ export default function MarketingPage() {
       <Box sx={{ bgcolor: 'background.surface', py: 10 }}>
         <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 2 }}>
           <Typography level="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
-            Highlights
+            {t('marketing.highlights')}
           </Typography>
           <Typography level="body-md" textColor="neutral.500" textAlign="center" sx={{ mb: 6 }}>
-            Explore why our product stands out: adaptability, durability, user-friendly design, and
-            innovation. Enjoy reliable customer support and precision in every detail.
+            {t('marketing.highlightsDesc')}
           </Typography>
           <Grid container spacing={4}>
             {[
               {
-                title: 'Adaptable performance',
-                description:
-                  'Our product effortlessly adjusts to your needs, boosting efficiency and simplifying your tasks.',
+                titleKey: 'auth.adaptablePerformance',
+                descKey: 'auth.adaptablePerformanceDesc',
               },
               {
-                title: 'Built to last',
-                description:
-                  'Experience unmatched durability that goes above and beyond with lasting investment.',
+                titleKey: 'auth.builtToLast',
+                descKey: 'auth.builtToLastDesc',
               },
               {
-                title: 'Great user experience',
-                description:
-                  'Integrate our product into your routine with an intuitive and easy-to-use interface.',
+                titleKey: 'auth.greatUserExperience',
+                descKey: 'auth.greatUserExperienceDesc',
               },
               {
-                title: 'Innovative functionality',
-                description:
-                  'Stay ahead with features that set new standards, addressing your evolving needs better than the rest.',
+                titleKey: 'auth.innovativeFunctionality',
+                descKey: 'auth.innovativeFunctionalityDesc',
               },
               {
-                title: 'Reliable support',
-                description:
-                  'Count on our responsive customer support, offering assistance that goes beyond the purchase.',
+                titleKey: 'auth.greatUserExperience',
+                descKey: 'auth.greatUserExperienceDesc',
               },
               {
-                title: 'Precision in every detail',
-                description:
-                  'Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.',
+                titleKey: 'auth.innovativeFunctionality',
+                descKey: 'auth.innovativeFunctionalityDesc',
               },
             ].map((highlight, index) => (
               <Grid xs={12} md={4} key={index}>
                 <Box>
                   <Typography level="title-lg" gutterBottom>
-                    {highlight.title}
+                    {t(highlight.titleKey)}
                   </Typography>
                   <Typography level="body-sm" textColor="neutral.500">
-                    {highlight.description}
+                    {t(highlight.descKey)}
                   </Typography>
                 </Box>
               </Grid>
@@ -283,11 +272,10 @@ export default function MarketingPage() {
       <Box sx={{ bgcolor: 'background.level1', py: 10 }}>
         <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 2 }}>
           <Typography level="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
-            Pricing
+            {t('marketing.pricing')}
           </Typography>
           <Typography level="body-md" textColor="neutral.500" textAlign="center" sx={{ mb: 6 }}>
-            Quickly build an effective pricing table for your potential customers with this layout.
-            It's built with default Material UI components with little customization.
+            {t('marketing.pricingDesc')}
           </Typography>
           <Grid container spacing={4} justifyContent="center">
             {[
@@ -316,7 +304,7 @@ export default function MarketingPage() {
                   'Dedicated team',
                   'Best deals',
                 ],
-                buttonText: 'Start now',
+                buttonText: t('marketing.startNow'),
                 recommended: true,
               },
               {
@@ -400,7 +388,7 @@ export default function MarketingPage() {
       <Box sx={{ bgcolor: 'background.surface', py: 10 }}>
         <Box sx={{ maxWidth: 'md', mx: 'auto', px: 2 }}>
           <Typography level="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
-            Frequently asked questions
+            {t('marketing.faq')}
           </Typography>
           <Box sx={{ mt: 4 }}>
             <AccordionGroup>
@@ -448,14 +436,14 @@ export default function MarketingPage() {
       <Box sx={{ bgcolor: 'primary.500', py: 8, color: 'white' }}>
         <Box sx={{ maxWidth: 'sm', mx: 'auto', textAlign: 'center', px: 2 }}>
           <Typography level="title-lg" gutterBottom>
-            Join the newsletter
+            {t('marketing.newsletter')}
           </Typography>
           <Typography level="body-sm" sx={{ mb: 4, opacity: 0.9 }}>
-            Subscribe for weekly updates. No spams ever!
+            {t('marketing.newsletterDesc')}
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Input
-              placeholder="Email"
+              placeholder={t('auth.email')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               sx={{
@@ -464,7 +452,7 @@ export default function MarketingPage() {
               }}
             />
             <Button variant="solid" size="lg" sx={{ bgcolor: 'white', color: 'primary.500' }}>
-              Subscribe
+              {t('marketing.subscribe')}
             </Button>
           </Box>
         </Box>
@@ -476,64 +464,64 @@ export default function MarketingPage() {
           <Grid container spacing={4}>
             <Grid xs={12} md={3}>
               <Typography level="title-lg" gutterBottom>
-                Product
+                {t('marketing.footer.product')}
               </Typography>
               <Stack spacing={1}>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  Features
+                  {t('marketing.footer.features')}
                 </JoyLink>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  Testimonials
+                  {t('marketing.footer.testimonials')}
                 </JoyLink>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  Highlights
+                  {t('marketing.footer.highlights')}
                 </JoyLink>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  Pricing
+                  {t('marketing.footer.pricing')}
                 </JoyLink>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  FAQs
+                  {t('marketing.footer.faqs')}
                 </JoyLink>
               </Stack>
             </Grid>
             <Grid xs={12} md={3}>
               <Typography level="title-lg" gutterBottom>
-                Company
+                {t('marketing.footer.company')}
               </Typography>
               <Stack spacing={1}>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  About us
+                  {t('marketing.footer.aboutUs')}
                 </JoyLink>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  Careers
+                  {t('marketing.footer.careers')}
                 </JoyLink>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  Press
+                  {t('marketing.footer.press')}
                 </JoyLink>
               </Stack>
             </Grid>
             <Grid xs={12} md={3}>
               <Typography level="title-lg" gutterBottom>
-                Legal
+                {t('marketing.footer.legal')}
               </Typography>
               <Stack spacing={1}>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  Terms
+                  {t('marketing.footer.terms')}
                 </JoyLink>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  Privacy
+                  {t('marketing.footer.privacy')}
                 </JoyLink>
                 <JoyLink href="#" textColor="neutral.500" underline="hover">
-                  Contact
+                  {t('marketing.footer.contact')}
                 </JoyLink>
               </Stack>
             </Grid>
             <Grid xs={12} md={3}>
               <Typography level="body-sm" textColor="neutral.500">
-                Privacy Policy • Terms of Service
+                {t('marketing.footer.privacyPolicy')}
               </Typography>
               <Typography level="body-sm" textColor="neutral.500" sx={{ mt: 2 }}>
-                Copyright © Sitemark 2025
+                {t('marketing.footer.copyright')}
               </Typography>
             </Grid>
           </Grid>

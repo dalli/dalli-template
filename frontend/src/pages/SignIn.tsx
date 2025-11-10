@@ -1,31 +1,31 @@
-import { useState } from 'react'
+import * as React from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
-  Avatar,
+  Box,
   Button,
+  Card,
+  Checkbox,
+  Divider,
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Link as JoyLink,
-  Sheet,
-  Grid,
-  Box,
   Typography,
-  Divider,
-  Alert,
+  CssVarsProvider,
 } from '@mui/joy'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import GoogleIcon from '@mui/icons-material/Google'
 import { useAuth } from '../contexts/AuthContext'
 import Logo from '../components/Logo'
 
 export default function SignIn() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { login } = useAuth()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [error, setError] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -36,213 +36,175 @@ export default function SignIn() {
       await login(email, password)
       navigate('/dashboard')
     } catch (err: any) {
-      setError(err.response?.data?.detail || '로그인에 실패했습니다.')
+      setError(err.response?.data?.detail || t('auth.loginError'))
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* AppBar */}
-      <Sheet
-        variant="outlined"
-        sx={{
-          p: 1,
-          borderBottom: '1px solid',
-          borderColor: 'divider',
-        }}
-      >
-        <Box sx={{ display: 'flex', alignItems: 'center', px: 2 }}>
-          <Logo variant="h6" />
-        </Box>
-      </Sheet>
+    <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
       <Box
-        component="main"
         sx={{
-          flex: 1,
+          width: '100%',
+          height: '100vh',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           bgcolor: 'background.level1',
-          p: 2,
+          px: 2,
+          py: 3,
         }}
       >
-        <Grid
-          container
-          component={Sheet}
-          variant="outlined"
+        <Box
+          component="main"
           sx={{
-            maxWidth: 1200,
-            minHeight: { xs: 'auto', sm: 800 },
-            height: { xs: 'auto', sm: 'auto' },
-            borderRadius: 'sm',
-            overflow: 'hidden',
+            width: '100%',
+            maxWidth: '450px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
           }}
         >
-          {/* Left side - Promotional area */}
-          <Grid
-            xs={12}
-            sm={6}
+          <Box
             sx={{
-              backgroundImage: 'url(https://source.unsplash.com/random?wallpaper)',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              display: { xs: 'none', sm: 'flex' },
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              mb: 2,
             }}
           >
-            <Box
-              sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                p: 4,
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                color: 'white',
-              }}
-            >
-              <Typography level="h1" sx={{ fontWeight: 700, mb: 3 }}>
-                Welcome Back
-              </Typography>
-              <Typography level="title-lg" sx={{ mb: 2, textAlign: 'center' }}>
-                Adaptable performance
-              </Typography>
-              <Typography level="body-md" sx={{ mb: 3, textAlign: 'center', maxWidth: 400 }}>
-                Our product effortlessly adjusts to your needs, boosting efficiency and simplifying
-                your tasks.
-              </Typography>
-              <Typography level="title-lg" sx={{ mb: 2, textAlign: 'center' }}>
-                Built to last
-              </Typography>
-              <Typography level="body-md" sx={{ mb: 3, textAlign: 'center', maxWidth: 400 }}>
-                Experience unmatched durability that goes above and beyond with lasting investment.
-              </Typography>
-              <Typography level="title-lg" sx={{ mb: 2, textAlign: 'center' }}>
-                Great user experience
-              </Typography>
-              <Typography level="body-md" sx={{ mb: 3, textAlign: 'center', maxWidth: 400 }}>
-                Integrate our product into your routine with an intuitive and easy-to-use interface.
-              </Typography>
-              <Typography level="title-lg" sx={{ mb: 2, textAlign: 'center' }}>
-                Innovative functionality
-              </Typography>
-              <Typography level="body-md" sx={{ textAlign: 'center', maxWidth: 400 }}>
-                Stay ahead with features that set new standards, addressing your evolving needs
-                better than the rest.
-              </Typography>
-            </Box>
-          </Grid>
-          {/* Right side - Sign in form */}
-          <Grid
-            xs={12}
-            sm={6}
+            <Logo variant="h6" />
+          </Box>
+          <Card
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
+              width: '100%',
+              overflow: 'auto',
             }}
           >
             <Box
               sx={{
-                my: 8,
-                mx: 4,
+                flex: 'none',
+                width: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
+                gap: 2,
+                mb: 2,
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: 'primary.500' }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography level="h3">Sign in</Typography>
-              <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
-                <FormControl required sx={{ mb: 2 }}>
-                  <FormLabel>Email</FormLabel>
-                  <Input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="이메일을 입력하세요"
-                    autoFocus
-                  />
-                </FormControl>
-                <FormControl required sx={{ mb: 2 }}>
-                  <FormLabel>Password</FormLabel>
-                  <Input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="비밀번호를 입력하세요"
-                  />
-                </FormControl>
-                <FormControl sx={{ mb: 2 }}>
-                  <Checkbox label="Remember me" />
-                </FormControl>
-                {error && (
-                  <Alert color="danger" variant="soft" sx={{ mb: 2 }}>
-                    {error}
-                  </Alert>
-                )}
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="solid"
-                  sx={{ mt: 3, mb: 2 }}
-                  loading={loading}
-                >
-                  Sign in
-                </Button>
-                <Grid container>
-                  <Grid xs>
-                    <JoyLink component={Link} to="#" level="body-sm">
-                      Forgot your password?
-                    </JoyLink>
-                  </Grid>
-                  <Grid>
-                    <JoyLink component={Link} to="/signup" level="body-sm">
-                      Don't have an account? Sign up
-                    </JoyLink>
-                  </Grid>
-                </Grid>
-                <Divider sx={{ my: 3 }}>or</Divider>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  sx={{ mb: 1 }}
-                  startDecorator={
-                    <Box
-                      component="img"
-                      src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                      alt="Google"
-                      sx={{ width: 20, height: 20 }}
-                    />
-                  }
-                >
-                  Sign in with Google
-                </Button>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  startDecorator={
-                    <Box
-                      component="img"
-                      src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/facebook.svg"
-                      alt="Facebook"
-                      sx={{ width: 20, height: 20 }}
-                    />
-                  }
-                >
-                  Sign in with Facebook
-                </Button>
-              </Box>
+              <Typography level="h2">{t('auth.signIn')}</Typography>
+              <Typography level="body-sm">
+                {t('auth.noAccount')}{' '}
+                <JoyLink component={Link} to="/signup" level="title-sm">
+                  {t('auth.signUp')}!
+                </JoyLink>
+              </Typography>
             </Box>
-          </Grid>
-        </Grid>
+            <Button
+              variant="outlined"
+              color="neutral"
+              fullWidth
+              startDecorator={<GoogleIcon />}
+              sx={{ mb: 2 }}
+            >
+              {t('auth.signInWithGoogle')}
+            </Button>
+            <Divider
+              sx={(theme) => ({
+                [theme.getColorSchemeSelector('light')]: {
+                  color: 'text.tertiary',
+                  fontWeight: 600,
+                  '&::before': {
+                    borderTop: 'thin solid',
+                    borderColor: 'divider',
+                  },
+                  '&::after': {
+                    borderTop: 'thin solid',
+                    borderColor: 'divider',
+                  },
+                },
+              })}
+            >
+              or
+            </Divider>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+                flex: 'auto',
+                mt: 2,
+                minWidth: 0,
+              }}
+            >
+              <FormControl required>
+                <FormLabel>{t('auth.email')}</FormLabel>
+                <Input
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                />
+              </FormControl>
+              <FormControl required>
+                <FormLabel>{t('auth.password')}</FormLabel>
+                <Input
+                  type="password"
+                  placeholder="•••••••"
+                  value={password}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                />
+              </FormControl>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Checkbox size="sm" label={t('auth.rememberMe')} name="persistent" />
+                <JoyLink level="title-sm" component={Link} to="#">
+                  {t('auth.forgotPassword')}
+                </JoyLink>
+              </Box>
+              {error && (
+                <Box
+                  sx={{
+                    p: 1.5,
+                    borderRadius: 'sm',
+                    bgcolor: 'danger.50',
+                    color: 'danger.500',
+                  }}
+                >
+                  <Typography level="body-sm">{error}</Typography>
+                </Box>
+              )}
+              <Button type="submit" fullWidth loading={loading}>
+                {t('auth.signIn')}
+              </Button>
+            </Box>
+            <Box
+              component="footer"
+              sx={{
+                py: 3,
+                display: 'flex',
+                justifyContent: 'center',
+                borderTop: '1px solid',
+                borderColor: 'divider',
+                mt: 2,
+              }}
+            >
+              <Typography level="body-xs" sx={{ textAlign: 'center' }}>
+                © Your company 2025
+              </Typography>
+            </Box>
+          </Card>
+        </Box>
       </Box>
-    </Box>
+    </CssVarsProvider>
   )
 }
