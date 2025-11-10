@@ -106,7 +106,7 @@ export default function Dashboard() {
   ]
 
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       {/* Breadcrumbs */}
       <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
         <MuiLink color="inherit" href="#">

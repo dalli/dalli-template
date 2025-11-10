@@ -1,18 +1,14 @@
 import { useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import Avatar from '@mui/material/Avatar'
 import MenuIcon from '@mui/icons-material/Menu'
 import Drawer from '@mui/material/Drawer'
 import Sidebar from '../components/Sidebar'
-import { useAuth } from '../contexts/AuthContext'
-import Logo from '../components/Logo'
 
 const drawerWidth = 240
 
@@ -42,7 +38,12 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean
 }>(({ theme, open }) => ({
   flexGrow: 1,
-  padding: theme.spacing(3),
+  width: '100%',
+  minWidth: 0,
+  paddingTop: theme.spacing(3),
+  paddingRight: theme.spacing(3),
+  paddingBottom: theme.spacing(3),
+  paddingLeft: 0,
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -54,21 +55,15 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: `${drawerWidth}px`,
+    width: `calc(100% - ${drawerWidth}px)`,
   }),
 }))
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(true)
-  const { user, logout } = useAuth()
-  const navigate = useNavigate()
 
   const toggleDrawer = () => {
     setOpen(!open)
-  }
-
-  const handleLogout = () => {
-    logout()
-    navigate('/signin')
   }
 
   return (
@@ -84,31 +79,7 @@ export default function DashboardLayout() {
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: 1, mr: 2 }}>
-            <Logo variant="h6" />
-            <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
-              Web app
-            </Typography>
-          </Box>
           <Box sx={{ flexGrow: 1 }} />
-          {user && (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  {user.name}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {user.email}
-                </Typography>
-              </Box>
-              <Avatar sx={{ width: 32, height: 32 }}>
-                {user.name?.[0] || 'U'}
-              </Avatar>
-              <Button color="inherit" onClick={handleLogout} size="small">
-                Logout
-              </Button>
-            </Box>
-          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -127,8 +98,10 @@ export default function DashboardLayout() {
         <Sidebar />
       </Drawer>
       <Main open={open}>
-        <Toolbar />
-        <Outlet />
+        <Stack sx={{ width: '100%' }}>
+          <Toolbar />
+          <Outlet />
+        </Stack>
       </Main>
     </Box>
   )
