@@ -1,57 +1,98 @@
 # Dalli Template
 
-Material UI와 TypeScript를 사용하는 풀스택 프로젝트 템플릿입니다.
+A modern full-stack web application template built with React, FastAPI, and PostgreSQL. Features internationalization (i18n), theme switching, user management, and authentication.
 
-## 프로젝트 구조
+## 🚀 Features
+
+- **Modern UI**: Built with MUI Joy UI for a beautiful, responsive interface
+- **Internationalization**: Support for English and Korean with easy language switching
+- **Theme Switching**: Light, Dark, and System theme modes
+- **User Management**: Full CRUD operations for user management
+- **Authentication**: Secure JWT-based authentication system
+- **Responsive Design**: Mobile-friendly layout with collapsible sidebar
+- **Docker Support**: Easy deployment with Docker Compose
+
+## 📁 Project Structure
 
 ```
 dalli-template/
-├── frontend/          # React + TypeScript + Material UI
+├── frontend/          # React + TypeScript + Joy UI
+│   ├── src/
+│   │   ├── components/    # Reusable components
+│   │   ├── contexts/      # React contexts (Auth)
+│   │   ├── i18n/          # Internationalization config and locales
+│   │   ├── layouts/       # Layout components
+│   │   ├── pages/         # Page components
+│   │   └── theme/         # Theme configuration
+│   └── package.json
 ├── backend/           # FastAPI
-├── database/          # PostgreSQL 설정 및 초기화 스크립트
+│   ├── app/
+│   │   ├── api/          # API routes
+│   │   ├── core/         # Core functionality (auth, config, database)
+│   │   ├── models/       # Database models
+│   │   └── schemas/      # Pydantic schemas
+│   └── requirements.txt
+├── database/         # PostgreSQL initialization scripts
+│   └── init/
 └── docker-compose.yaml
 ```
 
-## 기술 스택
+## 🛠️ Tech Stack
 
 ### Frontend
-- React 18
-- TypeScript
-- Material UI (MUI)
-- Vite
-- React Router
-- Recharts (차트)
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **MUI Joy UI** - Component library
+- **Vite** - Build tool
+- **React Router** - Routing
+- **i18next** - Internationalization
+- **Recharts** - Chart library
+- **Axios** - HTTP client
 
 ### Backend
-- Python 3.11
-- FastAPI
-- SQLAlchemy
-- Pydantic
-- PostgreSQL
+- **Python 3.11** - Programming language
+- **FastAPI** - Web framework
+- **SQLAlchemy** - ORM
+- **Pydantic** - Data validation
+- **PostgreSQL** - Database
+- **JWT** - Authentication
 
 ### Database
-- PostgreSQL 16
+- **PostgreSQL 16** - Relational database
 
-## 시작하기
+### DevOps
+- **Docker** - Containerization
+- **Docker Compose** - Multi-container orchestration
+- **Nginx** - Web server (production)
 
-### 필수 요구사항
+## 🚦 Getting Started
+
+### Prerequisites
+
 - Docker & Docker Compose
-- Node.js 20+ (로컬 개발 시)
-- Python 3.11+ (로컬 개발 시)
+- Node.js 20+ (for local development)
+- Python 3.11+ (for local development)
 
-### Docker로 전체 스택 실행
+### Quick Start with Docker
 
+1. Clone the repository:
+```bash
+git clone https://github.com/dalli/dalli-template.git
+cd dalli-template
+```
+
+2. Start all services:
 ```bash
 docker-compose up --build
 ```
 
-서비스 접속:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API 문서: http://localhost:8000/docs
-- Database: localhost:5432
+3. Access the application:
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+- **API Documentation**: http://localhost:8000/docs
+- **Database**: localhost:5432
 
-### 로컬 개발
+### Local Development
 
 #### Frontend
 
@@ -61,6 +102,8 @@ npm install
 npm run dev
 ```
 
+Frontend will be available at http://localhost:5173
+
 #### Backend
 
 ```bash
@@ -69,46 +112,282 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-## 환경 변수
+Backend will be available at http://localhost:8000
 
-각 디렉토리에 `.env.example` 파일이 있습니다. 이를 복사하여 `.env` 파일을 생성하고 필요한 값을 설정하세요.
+## ⚙️ Environment Variables
 
 ### Frontend (.env)
-```
+
+```env
 VITE_API_URL=http://localhost:8000
 ```
 
 ### Backend (.env)
-```
+
+```env
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=dalli_db
 POSTGRES_HOST=database
 POSTGRES_PORT=5432
+SECRET_KEY=your-secret-key-here
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 
-## 주요 기능
+## 📋 Main Features
 
-- Material UI Dashboard 템플릿 기반 UI
-- Responsive 레이아웃 (Sidebar + AppBar)
-- Chart 컴포넌트 (Recharts)
-- REST API (FastAPI)
-- PostgreSQL 데이터베이스 연동
-- Docker Compose로 간편한 배포
+### Authentication
+- User registration and login
+- JWT-based authentication
+- Protected routes
+- Session management
 
-## 개발 가이드
+### User Management
+- Create, Read, Update, Delete users
+- User role management (admin, user)
+- User status management (active, inactive)
+- Pagination support
 
-### 새로운 페이지 추가
-1. `frontend/src/pages/` 에 새 컴포넌트 생성
-2. `frontend/src/App.tsx` 에 라우트 추가
-3. `frontend/src/components/Sidebar.tsx` 에 메뉴 아이템 추가 (선택사항)
+### Internationalization (i18n)
+- English and Korean language support
+- Language switching in settings
+- Persistent language preference
+- Automatic language detection
 
-### 새로운 API 엔드포인트 추가
-1. `backend/app/models/` 에 모델 정의
-2. `backend/app/schemas/` 에 스키마 정의
-3. `backend/app/api/` 에 라우터 생성
-4. `backend/main.py` 에 라우터 등록
+### Theme Management
+- Light, Dark, and System theme modes
+- Theme switching in settings popup
+- Persistent theme preference
+- System theme detection
 
-## 라이선스
+### Dashboard
+- Overview statistics
+- Charts and visualizations
+- Responsive grid layout
+- Interactive components
+
+## 🎨 UI Components
+
+- **Sidebar**: Collapsible navigation menu with user profile
+- **Dashboard**: Overview with statistics and charts
+- **Users**: User management table with CRUD operations
+- **Settings**: Theme and language selection in popup menu
+- **Sign In/Sign Up**: Modern authentication pages
+
+## 🔧 Development Guide
+
+### Adding a New Page
+
+1. Create a new component in `frontend/src/pages/`:
+```typescript
+// frontend/src/pages/NewPage.tsx
+import { Box, Typography } from '@mui/joy'
+
+export default function NewPage() {
+  return (
+    <Box>
+      <Typography level="h1">New Page</Typography>
+    </Box>
+  )
+}
+```
+
+2. Add route in `frontend/src/App.tsx`:
+```typescript
+<Route path="new-page" element={<NewPage />} />
+```
+
+3. Add menu item in `frontend/src/components/Sidebar.tsx` (optional):
+```typescript
+{ textKey: 'common.newPage', icon: <NewPageIcon />, path: '/dashboard/new-page' }
+```
+
+4. Add translation keys in `frontend/src/i18n/locales/en.json` and `ko.json`:
+```json
+{
+  "common": {
+    "newPage": "New Page"
+  }
+}
+```
+
+### Adding a New API Endpoint
+
+1. Create model in `backend/app/models/`:
+```python
+# backend/app/models/new_model.py
+from sqlalchemy import Column, Integer, String
+from app.core.database import Base
+
+class NewModel(Base):
+    __tablename__ = "new_models"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+```
+
+2. Create schema in `backend/app/schemas/`:
+```python
+# backend/app/schemas/new_model.py
+from pydantic import BaseModel
+
+class NewModelBase(BaseModel):
+    name: str
+
+class NewModelCreate(NewModelBase):
+    pass
+
+class NewModel(NewModelBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+```
+
+3. Create router in `backend/app/api/`:
+```python
+# backend/app/api/new_model.py
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from app.core.database import get_db
+from app.models.new_model import NewModel
+from app.schemas.new_model import NewModelCreate, NewModel
+
+router = APIRouter()
+
+@router.post("/", response_model=NewModel)
+def create_new_model(new_model: NewModelCreate, db: Session = Depends(get_db)):
+    # Implementation
+    pass
+```
+
+4. Register router in `backend/main.py`:
+```python
+from app.api import new_model
+app.include_router(new_model.router, prefix="/api/new-models", tags=["new-models"])
+```
+
+### Adding a New Language
+
+1. Create locale file in `frontend/src/i18n/locales/`:
+```json
+// frontend/src/i18n/locales/fr.json
+{
+  "common": {
+    "home": "Accueil",
+    ...
+  }
+}
+```
+
+2. Import and add to `frontend/src/i18n/config.ts`:
+```typescript
+import frTranslations from './locales/fr.json'
+
+i18n.init({
+  resources: {
+    en: { translation: enTranslations },
+    ko: { translation: koTranslations },
+    fr: { translation: frTranslations },
+  },
+  // ...
+})
+```
+
+3. Add language option in `frontend/src/components/Sidebar.tsx`:
+```typescript
+<MenuItem
+  selected={currentLanguage === 'fr'}
+  onClick={() => handleLanguageChange('fr')}
+>
+  {t('settings.french')}
+</MenuItem>
+```
+
+## 📦 Docker Commands
+
+```bash
+# Build and start all services
+docker-compose up --build
+
+# Start services in detached mode
+docker-compose up -d
+
+# Stop services
+docker-compose down
+
+# View logs
+docker-compose logs -f
+
+# Rebuild specific service
+docker-compose up --build frontend
+
+# Stop and remove volumes
+docker-compose down -v
+```
+
+## 🧪 Testing
+
+### Frontend
+```bash
+cd frontend
+npm run lint
+npm run build
+```
+
+### Backend
+```bash
+cd backend
+# Run tests (if available)
+pytest
+```
+
+## 📝 API Documentation
+
+Once the backend is running, visit:
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+
+## 🔐 Default Credentials
+
+For development purposes, you can create a user through the sign-up page or use the API to create an admin user.
+
+## 🐛 Troubleshooting
+
+### Port Already in Use
+If you encounter port conflicts:
+```bash
+# Change ports in docker-compose.yaml
+ports:
+  - "3001:80"  # Frontend
+  - "8001:8000"  # Backend
+```
+
+### Database Connection Issues
+Ensure PostgreSQL is running and check environment variables:
+```bash
+docker-compose ps
+docker-compose logs database
+```
+
+### Frontend Build Errors
+Clear node_modules and rebuild:
+```bash
+cd frontend
+rm -rf node_modules package-lock.json
+npm install
+npm run build
+```
+
+## 📄 License
 
 MIT
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📧 Contact
+
+For questions or support, please open an issue on GitHub.
