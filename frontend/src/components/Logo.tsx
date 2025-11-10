@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/joy'
 
 interface LogoProps {
   variant?: 'h4' | 'h5' | 'h6'
@@ -7,6 +7,8 @@ interface LogoProps {
 }
 
 export default function Logo({ variant = 'h6', sx }: LogoProps) {
+  const level = variant === 'h4' ? 'h4' : variant === 'h5' ? 'h4' : 'h4'
+  
   return (
     <Box
       component={Link}
@@ -29,7 +31,7 @@ export default function Logo({ variant = 'h6', sx }: LogoProps) {
           width: 'auto',
         }}
       />
-      <Typography variant={variant} component="span" sx={{ fontWeight: 700 }}>
+      <Typography level={level} sx={{ fontWeight: 700 }}>
         DalliSoft
       </Typography>
     </Box>

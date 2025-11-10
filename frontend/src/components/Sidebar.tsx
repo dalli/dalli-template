@@ -1,17 +1,19 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import Toolbar from '@mui/material/Toolbar'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import Divider from '@mui/material/Divider'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Avatar from '@mui/material/Avatar'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemContent,
+  ListItemDecorator,
+  Sheet,
+  Typography,
+  Avatar,
+  Menu,
+  MenuItem,
+  Divider,
+} from '@mui/joy'
 import { useAuth } from '../contexts/AuthContext'
 import Logo from './Logo'
 import HomeIcon from '@mui/icons-material/Home'
@@ -23,9 +25,11 @@ import InfoIcon from '@mui/icons-material/Info'
 import FeedbackIcon from '@mui/icons-material/Feedback'
 import PersonIcon from '@mui/icons-material/Person'
 import LogoutIcon from '@mui/icons-material/Logout'
+import GroupIcon from '@mui/icons-material/Group'
 
 const menuItems = [
   { text: 'Home', icon: <HomeIcon />, path: '/dashboard' },
+  { text: 'Users', icon: <GroupIcon />, path: '/dashboard/users' },
   { text: 'Analytics', icon: <AnalyticsIcon />, path: '/dashboard/analytics' },
   { text: 'Clients', icon: <PeopleIcon />, path: '/dashboard/clients' },
   { text: 'Tasks', icon: <AssignmentIcon />, path: '/dashboard/tasks' },
@@ -66,26 +70,32 @@ export default function Sidebar() {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <Toolbar>
+    <Sheet
+      variant="soft"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        borderRight: '1px solid',
+        borderColor: 'divider',
+      }}
+    >
+      <Box sx={{ p: 2 }}>
         <Logo variant="h6" />
-      </Toolbar>
+      </Box>
       <Box sx={{ flex: 1, overflow: 'auto' }}>
         <List>
           {menuItems.map((item) => (
-            <ListItem key={item.text} disablePadding>
+            <ListItem key={item.text}>
               <ListItemButton
                 component={Link}
                 to={item.path}
                 selected={location.pathname === item.path}
-                sx={{
-                  '&.Mui-selected': {
-                    backgroundColor: 'action.selected',
-                  },
-                }}
+                variant={location.pathname === item.path ? 'soft' : 'plain'}
+                color={location.pathname === item.path ? 'primary' : 'neutral'}
               >
-                <ListItemIcon sx={{ color: 'inherit' }}>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
+                <ListItemDecorator>{item.icon}</ListItemDecorator>
+                <ListItemContent>{item.text}</ListItemContent>
               </ListItemButton>
             </ListItem>
           ))}
@@ -106,14 +116,14 @@ export default function Sidebar() {
             }}
             onClick={handleClick}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>
+            <Avatar size="sm">
               {user?.name?.[0] || 'U'}
             </Avatar>
             <Box>
-              <Typography variant="body2" sx={{ fontWeight: 600 }}>
+              <Typography level="body-sm" sx={{ fontWeight: 600 }}>
                 {user?.name || 'User'}
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography level="body-xs" textColor="neutral.500">
                 {user?.email || 'user@example.com'}
               </Typography>
             </Box>
@@ -122,37 +132,30 @@ export default function Sidebar() {
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-            transformOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
+            placement="top-start"
           >
             <MenuItem onClick={handleProfile}>
-              <ListItemIcon>
+              <ListItemDecorator>
                 <PersonIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Profile</ListItemText>
+              </ListItemDecorator>
+              Profile
             </MenuItem>
             <MenuItem onClick={handleSettings}>
-              <ListItemIcon>
+              <ListItemDecorator>
                 <SettingsIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Settings</ListItemText>
+              </ListItemDecorator>
+              Settings
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
+            <MenuItem onClick={handleLogout} color="danger">
+              <ListItemDecorator>
                 <LogoutIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Logout</ListItemText>
+              </ListItemDecorator>
+              Logout
             </MenuItem>
           </Menu>
         </Box>
       </Box>
-    </Box>
+    </Sheet>
   )
 }

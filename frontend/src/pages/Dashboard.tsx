@@ -5,17 +5,15 @@ import {
   Typography,
   Button,
   Breadcrumbs,
-  Link as MuiLink,
+  Link as JoyLink,
   Card,
-  CardContent,
   Alert,
   Chip,
   List,
   ListItem,
-  ListItemText,
-  ListItemIcon,
-  Collapse,
-} from '@mui/material'
+  ListItemContent,
+  ListItemDecorator,
+} from '@mui/joy'
 import {
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
@@ -56,14 +54,13 @@ export default function Dashboard() {
     return (
       <Box key={item.name} sx={{ pl: level * 2 }}>
         <ListItem
-          disablePadding
           sx={{
             cursor: hasChildren ? 'pointer' : 'default',
-            '&:hover': hasChildren ? { backgroundColor: 'action.hover' } : {},
+            '&:hover': hasChildren ? { backgroundColor: 'background.level1' } : {},
           }}
           onClick={() => hasChildren && toggleFolder(item.name)}
         >
-          <ListItemIcon sx={{ minWidth: 32 }}>
+          <ListItemDecorator>
             {hasChildren ? (
               isExpanded ? (
                 <FolderOpenIcon fontSize="small" />
@@ -73,18 +70,16 @@ export default function Dashboard() {
             ) : (
               <Box sx={{ width: 20 }} />
             )}
-          </ListItemIcon>
-          <ListItemText primary={item.name} />
+          </ListItemDecorator>
+          <ListItemContent>{item.name}</ListItemContent>
           {hasChildren && (
             <Box>{isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}</Box>
           )}
         </ListItem>
-        {hasChildren && (
-          <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {item.children.map((child: any) => renderTreeItem(child, level + 1))}
-            </List>
-          </Collapse>
+        {hasChildren && isExpanded && (
+          <List>
+            {item.children.map((child: any) => renderTreeItem(child, level + 1))}
+          </List>
         )}
       </Box>
     )
@@ -108,18 +103,18 @@ export default function Dashboard() {
   return (
     <Box sx={{ width: '100%' }}>
       {/* Breadcrumbs */}
-      <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
-        <MuiLink color="inherit" href="#">
+      <Breadcrumbs sx={{ mb: 2 }}>
+        <JoyLink href="#" color="neutral">
           Dashboard
-        </MuiLink>
-        <Typography color="text.primary">Home</Typography>
+        </JoyLink>
+        <Typography>Home</Typography>
       </Breadcrumbs>
 
       {/* Alert Banner */}
       <Alert
-        severity="warning"
-        action={
-          <Button color="inherit" size="small">
+        color="warning"
+        endDecorator={
+          <Button size="sm" variant="soft" color="warning">
             Get the discount
           </Button>
         }
@@ -133,209 +128,200 @@ export default function Dashboard() {
       {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Box>
-          <Typography variant="h4" component="h1" gutterBottom>
+          <Typography level="h1" gutterBottom>
             Dashboard
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography level="body-sm" textColor="neutral.500">
             Apr 17, 2023
           </Typography>
         </Box>
       </Box>
 
       {/* Overview Section */}
-      <Typography variant="h6" sx={{ mb: 2 }}>
+      <Typography level="title-lg" sx={{ mb: 2 }}>
         Overview
       </Typography>
       <Grid container spacing={3} sx={{ mb: 4 }}>
         {/* Users */}
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={4}>
           <Card>
-            <CardContent>
-              <Typography color="text.secondary" gutterBottom variant="body2">
-                Users
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h4">14k</Typography>
-                <Chip
-                  icon={<TrendingUpIcon />}
-                  label="+25%"
-                  color="success"
-                  size="small"
-                  sx={{ height: 24 }}
-                />
-              </Box>
-              <Typography variant="caption" color="text.secondary">
-                Last 30 days
-              </Typography>
-            </CardContent>
+            <Typography level="body-sm" textColor="neutral.500" gutterBottom>
+              Users
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography level="h2">14k</Typography>
+              <Chip
+                startDecorator={<TrendingUpIcon />}
+                color="success"
+                size="sm"
+                variant="soft"
+              >
+                +25%
+              </Chip>
+            </Box>
+            <Typography level="body-xs" textColor="neutral.500" sx={{ mt: 1 }}>
+              Last 30 days
+            </Typography>
           </Card>
         </Grid>
 
         {/* Conversions */}
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={4}>
           <Card>
-            <CardContent>
-              <Typography color="text.secondary" gutterBottom variant="body2">
-                Conversions
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h4">325</Typography>
-                <Chip
-                  icon={<TrendingDownIcon />}
-                  label="-25%"
-                  color="error"
-                  size="small"
-                  sx={{ height: 24 }}
-                />
-              </Box>
-              <Typography variant="caption" color="text.secondary">
-                Last 30 days
-              </Typography>
-            </CardContent>
+            <Typography level="body-sm" textColor="neutral.500" gutterBottom>
+              Conversions
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography level="h2">325</Typography>
+              <Chip
+                startDecorator={<TrendingDownIcon />}
+                color="danger"
+                size="sm"
+                variant="soft"
+              >
+                -25%
+              </Chip>
+            </Box>
+            <Typography level="body-xs" textColor="neutral.500" sx={{ mt: 1 }}>
+              Last 30 days
+            </Typography>
           </Card>
         </Grid>
 
         {/* Event count */}
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={4}>
           <Card>
-            <CardContent>
-              <Typography color="text.secondary" gutterBottom variant="body2">
-                Event count
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h4">200k</Typography>
-                <Chip
-                  icon={<TrendingUpIcon />}
-                  label="+5%"
-                  color="success"
-                  size="small"
-                  sx={{ height: 24 }}
-                />
-              </Box>
-              <Typography variant="caption" color="text.secondary">
-                Last 30 days
-              </Typography>
-            </CardContent>
+            <Typography level="body-sm" textColor="neutral.500" gutterBottom>
+              Event count
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography level="h2">200k</Typography>
+              <Chip
+                startDecorator={<TrendingUpIcon />}
+                color="success"
+                size="sm"
+                variant="soft"
+              >
+                +5%
+              </Chip>
+            </Box>
+            <Typography level="body-xs" textColor="neutral.500" sx={{ mt: 1 }}>
+              Last 30 days
+            </Typography>
           </Card>
         </Grid>
       </Grid>
 
       {/* Explore your data */}
       <Card sx={{ mb: 4 }}>
-        <CardContent>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Box>
-              <Typography variant="h6" gutterBottom>
-                Explore your data
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Uncover performance and visitor insights with our data wizardry.
-              </Typography>
-            </Box>
-            <Button variant="contained" startIcon={<AutoAwesomeIcon />}>
-              Get insights
-            </Button>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box>
+            <Typography level="title-lg" gutterBottom>
+              Explore your data
+            </Typography>
+            <Typography level="body-sm" textColor="neutral.500">
+              Uncover performance and visitor insights with our data wizardry.
+            </Typography>
           </Box>
-        </CardContent>
+          <Button variant="solid" startDecorator={<AutoAwesomeIcon />}>
+            Get insights
+          </Button>
+        </Box>
       </Card>
 
       <Grid container spacing={3}>
         {/* Sessions */}
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Sessions
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', mb: 1 }}>
-                <Typography variant="h4">13,277</Typography>
-                <Chip
-                  icon={<TrendingUpIcon />}
-                  label="+35%"
-                  color="success"
-                  size="small"
-                />
-              </Box>
-              <Typography variant="body2" color="text.secondary">
-                Sessions per day for the last 30 days
-              </Typography>
-            </CardContent>
+            <Typography level="title-lg" gutterBottom>
+              Sessions
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', mb: 1 }}>
+              <Typography level="h2">13,277</Typography>
+              <Chip
+                startDecorator={<TrendingUpIcon />}
+                color="success"
+                size="sm"
+                variant="soft"
+              >
+                +35%
+              </Chip>
+            </Box>
+            <Typography level="body-sm" textColor="neutral.500">
+              Sessions per day for the last 30 days
+            </Typography>
           </Card>
         </Grid>
 
         {/* Page views and downloads */}
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Page views and downloads
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', mb: 1 }}>
-                <Typography variant="h4">1.3M</Typography>
-                <Chip
-                  icon={<TrendingDownIcon />}
-                  label="-8%"
-                  color="error"
-                  size="small"
-                />
-              </Box>
-              <Typography variant="body2" color="text.secondary">
-                Page views and downloads for the last 6 months
-              </Typography>
-            </CardContent>
+            <Typography level="title-lg" gutterBottom>
+              Page views and downloads
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', mb: 1 }}>
+              <Typography level="h2">1.3M</Typography>
+              <Chip
+                startDecorator={<TrendingDownIcon />}
+                color="danger"
+                size="sm"
+                variant="soft"
+              >
+                -8%
+              </Chip>
+            </Box>
+            <Typography level="body-sm" textColor="neutral.500">
+              Page views and downloads for the last 6 months
+            </Typography>
           </Card>
         </Grid>
 
         {/* Details Section */}
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Details
-              </Typography>
-              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                Product tree
-              </Typography>
-              <List>
-                {productTree.map((item) => renderTreeItem(item))}
-              </List>
-            </CardContent>
+            <Typography level="title-lg" gutterBottom>
+              Details
+            </Typography>
+            <Typography level="title-lg" gutterBottom sx={{ mt: 2 }}>
+              Product tree
+            </Typography>
+            <List>
+              {productTree.map((item) => renderTreeItem(item))}
+            </List>
           </Card>
         </Grid>
 
         {/* Users by country */}
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Users by country
+            <Typography level="title-lg" gutterBottom>
+              Users by country
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+              <Typography level="h3">98.5K</Typography>
+              <Typography level="body-sm" textColor="neutral.500">
+                Total
               </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h5">98.5K</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Total
-                </Typography>
-              </Box>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={countryData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, value }) => `${name} ${value}%`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {countryData.map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </CardContent>
+            </Box>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={countryData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, value }) => `${name} ${value}%`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {countryData.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
           </Card>
         </Grid>
       </Grid>

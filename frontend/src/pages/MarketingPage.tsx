@@ -1,24 +1,22 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  AppBar,
-  Toolbar,
   Button,
-  Container,
-  Typography,
-  Box,
+  Input,
+  Link as JoyLink,
+  Sheet,
   Grid,
+  Box,
+  Typography,
   Card,
-  CardContent,
   Avatar,
-  TextField,
   Accordion,
+  AccordionGroup,
   AccordionSummary,
   AccordionDetails,
-  Link as MuiLink,
   Stack,
   Chip,
-} from '@mui/material'
+} from '@mui/joy'
 import {
   ExpandMore as ExpandMoreIcon,
   Dashboard as DashboardIcon,
@@ -33,77 +31,83 @@ export default function MarketingPage() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       {/* AppBar */}
-      <AppBar position="static" color="default" elevation={0}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+      <Sheet
+        variant="outlined"
+        sx={{
+          p: 1,
+          borderBottom: '1px solid',
+          borderColor: 'divider',
+        }}
+      >
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 2 }}>
           <Logo variant="h6" />
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-            <Button color="inherit">Features</Button>
-            <Button color="inherit">Testimonials</Button>
-            <Button color="inherit">Highlights</Button>
-            <Button color="inherit">Pricing</Button>
-            <Button color="inherit">FAQ</Button>
-            <Button color="inherit">Blog</Button>
+            <Button variant="plain" color="neutral">Features</Button>
+            <Button variant="plain" color="neutral">Testimonials</Button>
+            <Button variant="plain" color="neutral">Highlights</Button>
+            <Button variant="plain" color="neutral">Pricing</Button>
+            <Button variant="plain" color="neutral">FAQ</Button>
+            <Button variant="plain" color="neutral">Blog</Button>
           </Box>
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button color="inherit" component={Link} to="/signin">
+            <Button variant="plain" color="neutral" component={Link} to="/signin">
               Sign in
             </Button>
-            <Button variant="contained" color="primary" component={Link} to="/signup">
+            <Button variant="solid" color="primary" component={Link} to="/signup">
               Sign up
             </Button>
           </Box>
-        </Toolbar>
-      </AppBar>
+        </Box>
+      </Sheet>
 
       {/* Hero Section */}
-      <Container maxWidth="md" sx={{ py: 12, textAlign: 'center' }}>
-        <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
+      <Box sx={{ maxWidth: 'md', mx: 'auto', py: 12, textAlign: 'center', px: 2 }}>
+        <Typography level="h1" sx={{ fontWeight: 700, mb: 3 }}>
           Our latest products
         </Typography>
-        <Typography variant="h5" color="text.secondary" sx={{ mb: 4, maxWidth: 600, mx: 'auto' }}>
+        <Typography level="title-lg" textColor="neutral.500" sx={{ mb: 4, maxWidth: 600, mx: 'auto' }}>
           Explore our cutting-edge dashboard, delivering high-quality solutions tailored to your
           needs. Elevate your experience with top-tier features and services.
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap', mb: 6 }}>
-          <TextField
+          <Input
             placeholder="Email"
-            variant="outlined"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             sx={{ minWidth: 300 }}
           />
-          <Button variant="contained" size="large" color="primary">
+          <Button variant="solid" size="lg" color="primary">
             Start now
           </Button>
         </Box>
-        <Typography variant="body2" color="text.secondary">
+        <Typography level="body-sm" textColor="neutral.500">
           By clicking "Start now" you agree to our Terms & Conditions.
         </Typography>
 
         {/* Trusted by */}
         <Box sx={{ mt: 8 }}>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          <Typography level="body-sm" textColor="neutral.500" sx={{ mb: 3 }}>
             Trusted by the best companies
           </Typography>
           <Grid container spacing={4} justifyContent="center">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Grid item key={i}>
-                <Typography variant="body2" color="text.secondary">
+              <Grid xs="auto" key={i}>
+                <Typography level="body-sm" textColor="neutral.500">
                   Fake company number {i}
                 </Typography>
               </Grid>
             ))}
           </Grid>
         </Box>
-      </Container>
+      </Box>
 
       {/* Features Section */}
-      <Box sx={{ bgcolor: 'background.paper', py: 10 }}>
-        <Container maxWidth="lg">
-          <Typography variant="h4" component="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
+      <Box sx={{ bgcolor: 'background.surface', py: 10 }}>
+        <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 2 }}>
+          <Typography level="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
             Product features
           </Typography>
-          <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ mb: 6 }}>
+          <Typography level="body-md" textColor="neutral.500" textAlign="center" sx={{ mb: 6 }}>
             Provide a brief overview of the key features of the product. For example, you could
             list the number of features, their types or benefits, and add-ons.
           </Typography>
@@ -128,29 +132,29 @@ export default function MarketingPage() {
                 icon: <DevicesIcon sx={{ fontSize: 40 }} />,
               },
             ].map((feature, index) => (
-              <Grid item xs={12} md={4} key={index}>
-                <Card elevation={0} sx={{ height: '100%', textAlign: 'center', p: 3 }}>
-                  <Box sx={{ color: 'primary.main', mb: 2 }}>{feature.icon}</Box>
-                  <Typography variant="h6" gutterBottom>
+              <Grid xs={12} md={4} key={index}>
+                <Card variant="outlined" sx={{ height: '100%', textAlign: 'center', p: 3 }}>
+                  <Box sx={{ color: 'primary.500', mb: 2 }}>{feature.icon}</Box>
+                  <Typography level="title-lg" gutterBottom>
                     {feature.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography level="body-sm" textColor="neutral.500">
                     {feature.description}
                   </Typography>
                 </Card>
               </Grid>
             ))}
           </Grid>
-        </Container>
+        </Box>
       </Box>
 
       {/* Testimonials Section */}
-      <Box sx={{ bgcolor: 'background.default', py: 10 }}>
-        <Container maxWidth="lg">
-          <Typography variant="h4" component="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
+      <Box sx={{ bgcolor: 'background.level1', py: 10 }}>
+        <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 2 }}>
+          <Typography level="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
             Testimonials
           </Typography>
-          <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ mb: 6 }}>
+          <Typography level="body-md" textColor="neutral.500" textAlign="center" sx={{ mb: 6 }}>
             See what our customers love about our products. Discover how we excel in efficiency,
             durability, and satisfaction. Join us for quality, innovation, and reliable support.
           </Typography>
@@ -193,20 +197,20 @@ export default function MarketingPage() {
                 logo: 'Logo 6',
               },
             ].map((testimonial, index) => (
-              <Grid item xs={12} md={4} key={index}>
-                <Card elevation={0} sx={{ height: '100%', p: 3 }}>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              <Grid xs={12} md={4} key={index}>
+                <Card variant="outlined" sx={{ height: '100%', p: 3 }}>
+                  <Typography level="body-sm" textColor="neutral.500" sx={{ mb: 2 }}>
                     {testimonial.text}
                   </Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', mt: 3 }}>
                     <Avatar sx={{ mr: 2 }}>{testimonial.name[0]}</Avatar>
                     <Box>
-                      <Typography variant="subtitle2">{testimonial.name}</Typography>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography level="title-sm">{testimonial.name}</Typography>
+                      <Typography level="body-xs" textColor="neutral.500">
                         {testimonial.role}
                       </Typography>
                     </Box>
-                    <Typography variant="caption" color="text.secondary" sx={{ ml: 'auto' }}>
+                    <Typography level="body-xs" textColor="neutral.500" sx={{ ml: 'auto' }}>
                       {testimonial.logo}
                     </Typography>
                   </Box>
@@ -214,16 +218,16 @@ export default function MarketingPage() {
               </Grid>
             ))}
           </Grid>
-        </Container>
+        </Box>
       </Box>
 
       {/* Highlights Section */}
-      <Box sx={{ bgcolor: 'background.paper', py: 10 }}>
-        <Container maxWidth="lg">
-          <Typography variant="h4" component="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
+      <Box sx={{ bgcolor: 'background.surface', py: 10 }}>
+        <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 2 }}>
+          <Typography level="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
             Highlights
           </Typography>
-          <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ mb: 6 }}>
+          <Typography level="body-md" textColor="neutral.500" textAlign="center" sx={{ mb: 6 }}>
             Explore why our product stands out: adaptability, durability, user-friendly design, and
             innovation. Enjoy reliable customer support and precision in every detail.
           </Typography>
@@ -260,28 +264,28 @@ export default function MarketingPage() {
                   'Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.',
               },
             ].map((highlight, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid xs={12} md={4} key={index}>
                 <Box>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography level="title-lg" gutterBottom>
                     {highlight.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography level="body-sm" textColor="neutral.500">
                     {highlight.description}
                   </Typography>
                 </Box>
               </Grid>
             ))}
           </Grid>
-        </Container>
+        </Box>
       </Box>
 
       {/* Pricing Section */}
-      <Box sx={{ bgcolor: 'background.default', py: 10 }}>
-        <Container maxWidth="lg">
-          <Typography variant="h4" component="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
+      <Box sx={{ bgcolor: 'background.level1', py: 10 }}>
+        <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 2 }}>
+          <Typography level="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
             Pricing
           </Typography>
-          <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ mb: 6 }}>
+          <Typography level="body-md" textColor="neutral.500" textAlign="center" sx={{ mb: 6 }}>
             Quickly build an effective pricing table for your potential customers with this layout.
             It's built with default Material UI components with little customization.
           </Typography>
@@ -329,32 +333,36 @@ export default function MarketingPage() {
                 recommended: false,
               },
             ].map((plan, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid xs={12} md={4} key={index}>
                 <Card
-                  elevation={plan.recommended ? 8 : 0}
+                  variant={plan.recommended ? 'soft' : 'outlined'}
+                  color={plan.recommended ? 'primary' : 'neutral'}
                   sx={{
                     height: '100%',
                     position: 'relative',
                     border: plan.recommended ? 2 : 1,
-                    borderColor: plan.recommended ? 'primary.main' : 'divider',
+                    borderColor: plan.recommended ? 'primary.500' : 'divider',
                   }}
                 >
                   {plan.recommended && (
                     <Chip
-                      label="Recommended"
+                      size="sm"
+                      variant="solid"
                       color="primary"
                       sx={{ position: 'absolute', top: 16, right: 16 }}
-                    />
+                    >
+                      Recommended
+                    </Chip>
                   )}
-                  <CardContent sx={{ p: 4 }}>
-                    <Typography variant="h5" gutterBottom>
+                  <Box sx={{ p: 4 }}>
+                    <Typography level="title-lg" gutterBottom>
                       {plan.name}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 2 }}>
-                      <Typography variant="h3" component="span">
+                      <Typography level="h1" component="span">
                         {plan.price}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+                      <Typography level="body-sm" textColor="neutral.500" sx={{ ml: 1 }}>
                         {plan.period}
                       </Typography>
                     </Box>
@@ -369,171 +377,168 @@ export default function MarketingPage() {
                             borderColor: 'divider',
                           }}
                         >
-                          <Typography variant="body2">{feature}</Typography>
+                          <Typography level="body-sm">{feature}</Typography>
                         </Box>
                       ))}
                     </Box>
                     <Button
-                      variant={plan.recommended ? 'contained' : 'outlined'}
+                      variant={plan.recommended ? 'solid' : 'outlined'}
                       fullWidth
                       color="primary"
                     >
                       {plan.buttonText}
                     </Button>
-                  </CardContent>
+                  </Box>
                 </Card>
               </Grid>
             ))}
           </Grid>
-        </Container>
+        </Box>
       </Box>
 
       {/* FAQ Section */}
-      <Box sx={{ bgcolor: 'background.paper', py: 10 }}>
-        <Container maxWidth="md">
-          <Typography variant="h4" component="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
+      <Box sx={{ bgcolor: 'background.surface', py: 10 }}>
+        <Box sx={{ maxWidth: 'md', mx: 'auto', px: 2 }}>
+          <Typography level="h2" textAlign="center" gutterBottom sx={{ mb: 2 }}>
             Frequently asked questions
           </Typography>
           <Box sx={{ mt: 4 }}>
-            {[
-              {
-                question: 'How do I contact customer support if I have a question or issue?',
-                answer:
-                  "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We're here to assist you promptly.",
-              },
-              {
-                question: "Can I return the product if it doesn't meet my expectations?",
-                answer:
-                  "Absolutely! We offer a hassle-free return policy. If you're not completely satisfied, you can return the product within [number of days] days for a full refund or exchange.",
-              },
-              {
-                question: 'What makes your product stand out from others in the market?',
-                answer:
-                  'Our product distinguishes itself through its adaptability, durability, and innovative features. We prioritize user satisfaction and continually strive to exceed expectations in every aspect.',
-              },
-              {
-                question: 'Is there a warranty on the product, and what does it cover?',
-                answer:
-                  'Yes, our product comes with a [length of warranty] warranty. It covers defects in materials and workmanship. If you encounter any issues covered by the warranty, please contact our customer support for assistance.',
-              },
-            ].map((faq, index) => (
-              <Accordion key={index} elevation={0}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography variant="subtitle1">{faq.question}</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography variant="body2" color="text.secondary">
-                    {faq.answer}
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            ))}
+            <AccordionGroup>
+              {[
+                {
+                  question: 'How do I contact customer support if I have a question or issue?',
+                  answer:
+                    "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We're here to assist you promptly.",
+                },
+                {
+                  question: "Can I return the product if it doesn't meet my expectations?",
+                  answer:
+                    "Absolutely! We offer a hassle-free return policy. If you're not completely satisfied, you can return the product within [number of days] days for a full refund or exchange.",
+                },
+                {
+                  question: 'What makes your product stand out from others in the market?',
+                  answer:
+                    'Our product distinguishes itself through its adaptability, durability, and innovative features. We prioritize user satisfaction and continually strive to exceed expectations in every aspect.',
+                },
+                {
+                  question: 'Is there a warranty on the product, and what does it cover?',
+                  answer:
+                    'Yes, our product comes with a [length of warranty] warranty. It covers defects in materials and workmanship. If you encounter any issues covered by the warranty, please contact our customer support for assistance.',
+                },
+              ].map((faq, index) => (
+                <Accordion key={index}>
+                  <AccordionSummary
+                    indicator={<ExpandMoreIcon />}
+                  >
+                    <Typography level="title-sm">{faq.question}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography level="body-sm" textColor="neutral.500">
+                      {faq.answer}
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </AccordionGroup>
           </Box>
-        </Container>
+        </Box>
       </Box>
 
       {/* Newsletter Section */}
-      <Box sx={{ bgcolor: 'primary.main', py: 8, color: 'white' }}>
-        <Container maxWidth="sm" sx={{ textAlign: 'center' }}>
-          <Typography variant="h5" gutterBottom>
+      <Box sx={{ bgcolor: 'primary.500', py: 8, color: 'white' }}>
+        <Box sx={{ maxWidth: 'sm', mx: 'auto', textAlign: 'center', px: 2 }}>
+          <Typography level="title-lg" gutterBottom>
             Join the newsletter
           </Typography>
-          <Typography variant="body2" sx={{ mb: 4, opacity: 0.9 }}>
+          <Typography level="body-sm" sx={{ mb: 4, opacity: 0.9 }}>
             Subscribe for weekly updates. No spams ever!
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <TextField
+            <Input
               placeholder="Email"
-              variant="outlined"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               sx={{
                 minWidth: 300,
                 bgcolor: 'white',
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: 'transparent',
-                  },
-                },
               }}
             />
-            <Button variant="contained" size="large" sx={{ bgcolor: 'white', color: 'primary.main' }}>
+            <Button variant="solid" size="lg" sx={{ bgcolor: 'white', color: 'primary.500' }}>
               Subscribe
             </Button>
           </Box>
-        </Container>
+        </Box>
       </Box>
 
       {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', py: 6, borderTop: 1, borderColor: 'divider' }}>
-        <Container maxWidth="lg">
+      <Box sx={{ bgcolor: 'background.surface', py: 6, borderTop: 1, borderColor: 'divider' }}>
+        <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 2 }}>
           <Grid container spacing={4}>
-            <Grid item xs={12} md={3}>
-              <Typography variant="h6" gutterBottom>
+            <Grid xs={12} md={3}>
+              <Typography level="title-lg" gutterBottom>
                 Product
               </Typography>
               <Stack spacing={1}>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   Features
-                </MuiLink>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                </JoyLink>
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   Testimonials
-                </MuiLink>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                </JoyLink>
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   Highlights
-                </MuiLink>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                </JoyLink>
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   Pricing
-                </MuiLink>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                </JoyLink>
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   FAQs
-                </MuiLink>
+                </JoyLink>
               </Stack>
             </Grid>
-            <Grid item xs={12} md={3}>
-              <Typography variant="h6" gutterBottom>
+            <Grid xs={12} md={3}>
+              <Typography level="title-lg" gutterBottom>
                 Company
               </Typography>
               <Stack spacing={1}>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   About us
-                </MuiLink>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                </JoyLink>
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   Careers
-                </MuiLink>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                </JoyLink>
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   Press
-                </MuiLink>
+                </JoyLink>
               </Stack>
             </Grid>
-            <Grid item xs={12} md={3}>
-              <Typography variant="h6" gutterBottom>
+            <Grid xs={12} md={3}>
+              <Typography level="title-lg" gutterBottom>
                 Legal
               </Typography>
               <Stack spacing={1}>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   Terms
-                </MuiLink>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                </JoyLink>
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   Privacy
-                </MuiLink>
-                <MuiLink href="#" color="text.secondary" underline="hover">
+                </JoyLink>
+                <JoyLink href="#" textColor="neutral.500" underline="hover">
                   Contact
-                </MuiLink>
+                </JoyLink>
               </Stack>
             </Grid>
-            <Grid item xs={12} md={3}>
-              <Typography variant="body2" color="text.secondary">
+            <Grid xs={12} md={3}>
+              <Typography level="body-sm" textColor="neutral.500">
                 Privacy Policy • Terms of Service
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              <Typography level="body-sm" textColor="neutral.500" sx={{ mt: 2 }}>
                 Copyright © Sitemark 2025
               </Typography>
             </Grid>
           </Grid>
-        </Container>
+        </Box>
       </Box>
     </Box>
   )
 }
-

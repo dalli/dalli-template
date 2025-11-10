@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import DashboardLayout from './layouts/DashboardLayout'
 import Dashboard from './pages/Dashboard'
+import Users from './pages/Users'
 import MarketingPage from './pages/MarketingPage'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
@@ -21,6 +22,7 @@ function App() {
         }
       >
         <Route index element={<Dashboard />} />
+        <Route path="users" element={<Users />} />
       </Route>
     </Routes>
   )

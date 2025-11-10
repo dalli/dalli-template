@@ -1,7 +1,4 @@
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import { Card, Typography, Box } from '@mui/joy'
 
 interface StatCardProps {
   title: string
@@ -13,30 +10,28 @@ interface StatCardProps {
 export default function StatCard({ title, value, icon, color = '#1976d2' }: StatCardProps) {
   return (
     <Card sx={{ height: '100%' }}>
-      <CardContent>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          <Box
-            sx={{
-              backgroundColor: color,
-              borderRadius: 2,
-              p: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              mr: 2,
-            }}
-          >
-            {icon}
-          </Box>
-          <Typography variant="h6" component="div" color="text.secondary">
-            {title}
-          </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+        <Box
+          sx={{
+            backgroundColor: color,
+            borderRadius: 2,
+            p: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            mr: 2,
+          }}
+        >
+          {icon}
         </Box>
-        <Typography variant="h4" component="div">
-          {value}
+        <Typography level="title-md" textColor="neutral.500">
+          {title}
         </Typography>
-      </CardContent>
+      </Box>
+      <Typography level="h2">
+        {value}
+      </Typography>
     </Card>
   )
 }

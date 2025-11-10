@@ -1,25 +1,38 @@
-import { createTheme } from '@mui/material/styles'
+import { extendTheme } from '@mui/joy/styles'
 
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#1976d2',
-      light: '#42a5f5',
-      dark: '#1565c0',
-    },
-    secondary: {
-      main: '#9c27b0',
-      light: '#ba68c8',
-      dark: '#7b1fa2',
-    },
-    background: {
-      default: '#f5f5f5',
-      paper: '#ffffff',
+const theme = extendTheme({
+  colorSchemes: {
+    light: {
+      palette: {
+        primary: {
+          50: '#e3f2fd',
+          100: '#bbdefb',
+          200: '#90caf9',
+          300: '#64b5f6',
+          400: '#42a5f5',
+          500: '#2196f3',
+          600: '#1e88e5',
+          700: '#1976d2',
+          800: '#1565c0',
+          900: '#0d47a1',
+        },
+        neutral: {
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#eeeeee',
+          300: '#e0e0e0',
+          400: '#bdbdbd',
+          500: '#9e9e9e',
+          600: '#757575',
+          700: '#616161',
+          800: '#424242',
+          900: '#212121',
+        },
+      },
     },
   },
-  typography: {
-    fontFamily: [
+  fontFamily: {
+    display: [
       'Roboto',
       '-apple-system',
       'BlinkMacSystemFont',
@@ -27,16 +40,14 @@ const theme = createTheme({
       'Arial',
       'sans-serif',
     ].join(','),
-  },
-  components: {
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          backgroundColor: '#f5f5f5',
-          color: 'inherit',
-        },
-      },
-    },
+    body: [
+      'Roboto',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Arial',
+      'sans-serif',
+    ].join(','),
   },
 })
 
